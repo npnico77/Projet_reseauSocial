@@ -21,6 +21,7 @@ const FriendsHint = () => {
           ) {
             return array.push(user._id);
           }
+          return null;
         });
         array.sort(() => 0.5 - Math.random());
         if (window.innerHeight > 780) {
@@ -67,6 +68,7 @@ const FriendsHint = () => {
                   );
                 }
               }
+              return null;
             })}
         </ul>
       )}
