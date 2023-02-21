@@ -24,6 +24,7 @@ const Navbar = () => {
             <li></li>
             <li className="welcome">
               <NavLink to="/profil">
+                <img src={userData.picture} alt="" />
                 <h5>Bienvenue {userData.pseudo}</h5>
               </NavLink>
             </li>

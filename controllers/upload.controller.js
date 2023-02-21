@@ -7,12 +7,17 @@ const pipeline = promisify(require("stream").pipeline);
 
 module.exports.uploadProfil = async (req, res) => {
   try {
-    const validMimeTypes = ["image/jpg", "image/png", "image/jpeg"];
-    if (!validMimeTypes.includes(req.file.detectedMimeType)) {
-      throw new Error("invalid file");
-    }
-    if (req.file.size > 750000) {
-      throw new Error("max size");
+    try {
+      const validMimeTypes = ["image/jpg", "image/png", "image/jpeg"];
+      if (!validMimeTypes.includes(req.file.detectedMimeType)) {
+        throw Error("invalid file");
+      }
+      if (req.file.size > 750000) {
+        throw Error("max size");
+      }
+    } catch (err) {
+      const errors = upLoadErrors(err);
+      return res.status(201).json({ errors });
     }
 
     const fileName = req.body.name + ".jpg";

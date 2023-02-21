@@ -18,12 +18,17 @@ module.exports.createPost = async (req, res) => {
   try {
     let picturePath = "";
     if (req.file) {
-      const validMimeTypes = ["image/jpg", "image/png", "image/jpeg"];
-      if (!validMimeTypes.includes(req.file.detectedMimeType)) {
-        throw new Error("Invalid file type");
-      }
-      if (req.file.size > 750000) {
-        throw new Error("File too large");
+      try {
+        const validMimeTypes = ["image/jpg", "image/png", "image/jpeg"];
+        if (!validMimeTypes.includes(req.file.detectedMimeType)) {
+          throw Error("invalid file");
+        }
+        if (req.file.size > 750000) {
+          throw Error("max size");
+        }
+      } catch (err) {
+        const errors = upLoadErrors(err);
+        return res.status(201).json({ errors });
       }
 
       const fileName = `${req.body.posterId}_${Date.now()}.jpg`;
